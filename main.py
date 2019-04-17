@@ -5,9 +5,9 @@ import metalsucks
 import metalarchives
 
 # print("articles from Metal Injection:")
-# metalinjection.scrape_articles()
+metalinjection.scrape_articles()
 
 # print("\narticles from MetalSucks:")
 # metalsucks.scrape_articles()
 
-metalarchives.scrape_releases()
+# metalarchives.scrape_releases()
