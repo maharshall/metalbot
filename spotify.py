@@ -2,20 +2,19 @@
 
 import requests
 import random
-import webbrowser
-import pprint
 import spotipy
 import spotipy.util as util
 
 username = 'username'
-playlist_id = 'playlsit_id'
+playlist_id = 'playlist_id'
 client_id = 'client_id'
 client_secret='client_secret'
 redirect_uri='redirect_uri'
 
 def get_auth_token():
     scope = ('playlist-read-private playlist-read-collaborative '
-             'playlist-modify-public playlist-modify-private')
+             'playlist-modify-public playlist-modify-private'
+    )
 
     token = util.prompt_for_user_token(
         username, scope, client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri

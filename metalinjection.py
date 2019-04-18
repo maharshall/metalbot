@@ -7,7 +7,9 @@ import re
 def scrape_articles():
     # page = requests.get('https://metalinjection.net/category/new-music')
     # soup = BeautifulSoup(page.content, 'html.parser')
-    soup = BeautifulSoup(open("metalinjection.html"), 'html.parser')
+    # soup = BeautifulSoup(open("metalinjection.html"), 'html.parser')
+    with open('metalinjection.html', 'rb') as html:
+        soup = BeautifulSoup(html)
 
     articles = soup.find_all("h2", class_="title")
     songs = []
