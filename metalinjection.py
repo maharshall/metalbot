@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
-def scrape_articles():
+def scrape_headlines():
     page = requests.get('https://metalinjection.net/category/new-music', headers={'User-Agent':'Mozilla/5.0'})
     soup = BeautifulSoup(page.content, 'html.parser')
     

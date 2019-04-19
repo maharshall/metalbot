@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
-def scrape_articles():
+def scrape_headlines():
     page = requests.get('https://www.decibelmagazine.com/category/track-premiere/', headers={'User-Agent':'Mozilla/5.0'})
     soup = BeautifulSoup(page.content, 'html.parser')
     
@@ -20,12 +20,12 @@ def scrape_articles():
             break
         title = article.a.text.strip()
         if "Track" in title:
-            artist = re.findall(r"(?<=: )[a-zA-Z0-9\s]+(?= -)", title)
+            artist = re.findall(r"(?<=: )[a-zA-Z0-9\s]+", title)
             track = re.findall(r"(?<=\‘)[a-zA-Z0-9\s]+(?=\’)", title)
             
             artist = ''.join(map(str, artist))
             track = ''.join(map(str, track))
-            
+
             if track:
                 songs.append([artist, track])
 
