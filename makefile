@@ -9,5 +9,4 @@ clean:
 test:
 	> metalinjection.txt
 	> decibel.txt
-	> metalstorm.txt
 	python main.py

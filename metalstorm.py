@@ -12,9 +12,9 @@ def scrape_new_releases():
     soup = BeautifulSoup(page.content, 'html.parser')
 
     now = datetime.datetime.now()
-    date = str(now.day)
-    if len(date) == 1:
-        date = '0'+date
+    day = str(now.day)
+    if len(day) == 1:
+        day = '0'+day
     
     div = soup.find_all("div", class_="padding-10")
     table = div[2].find_all("td")
@@ -22,8 +22,8 @@ def scrape_new_releases():
     
     for i in range(len(table)):
         if i%2 == 0:
-            # check date, break if not today
-            if table[i].text[:2] != date:
+            # check day, break if not today
+            if table[i].text[:2] != day:
                 break
         else:
             # add to list, no regex necesarry

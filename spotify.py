@@ -10,8 +10,8 @@ username = 'username'
 singles = 'playlist_id'
 releases = 'playlist_id'
 client_id = 'client_id'
-client_secret = 'client_secret'
-redirect_uri = 'redirect_uri'
+client_secret='client_secret'
+redirect_uri='redirect_uri'
 
 def get_auth_token():
     scope = ('playlist-read-private playlist-read-collaborative '
@@ -35,13 +35,13 @@ def add_single(token, queries):
             result = sp.album_tracks(album['albums']['items'][0]['id'])
 
             if len(result['items']) > 0:
-                # if check_track_correct(q[0], q[1], result):
                 for track in tracks['items']:
                     if track['track']['name'] == result['items'][0]['name']:
                         return None
 
                 track_uri = result['items'][0]['uri']
                 sp.user_playlist_add_tracks(username, singles, {track_uri})
+                print('-> added \''+result['items'][0]['name']+'\' to singles')
 
 def add_release(token, queries):
     sp = spotipy.Spotify(auth=token)
@@ -54,13 +54,13 @@ def add_release(token, queries):
             result = sp.album_tracks(album['albums']['items'][0]['uri'], 1, 1)
 
             if len(result['items']) > 0:
-                # if check_track_correct(q[0], q[1], result):
                 for track in tracks['items']:
                     if track['track']['name'] == result['items'][0]['name']:
                         return None
 
                 track_uri = result['items'][0]['uri']
                 sp.user_playlist_add_tracks(username, releases, {track_uri})
+                print('-> added \''+result['items'][0]['name']+'\' to releases')
 
 def check_track_correct(artist, track, result):
     if track.lower().strip() == result['items'][0]['name'].lower().strip():
