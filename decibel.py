@@ -8,7 +8,7 @@ def scrape_headlines():
     page = requests.get('https://www.decibelmagazine.com/category/track-premiere/', headers={'User-Agent':'Mozilla/5.0'})
     soup = BeautifulSoup(page.content, 'html.parser')
     
-    file = open('decibel.txt', 'r')
+    file = open('txt/decibel.txt', 'r')
     headline = file.readline()
     file.close()
     
@@ -16,7 +16,7 @@ def scrape_headlines():
     songs = []
     
     for article in articles:
-        if article.text == headline:
+        if article.text.strip() == headline:
             break
         title = article.a.text.strip()
         if "Track" in title:
@@ -29,7 +29,7 @@ def scrape_headlines():
             if track:
                 songs.append([artist, track])
 
-    file = open('decibel.txt', 'w')
+    file = open('txt/decibel.txt', 'w')
     file.write(articles[0].a.text.strip())
     file.close()
     

@@ -8,7 +8,7 @@ def scrape_headlines():
     page = requests.get('https://metalinjection.net/category/new-music', headers={'User-Agent':'Mozilla/5.0'})
     soup = BeautifulSoup(page.content, 'html.parser')
     
-    file = open('metalinjection.txt', 'r')
+    file = open('txt/metalinjection.txt', 'r')
     headline = file.readline()
     file.close()
     
@@ -30,7 +30,7 @@ def scrape_headlines():
             if track:
                 songs.append([artist, track])
 
-    file = open('metalinjection.txt', 'w')
+    file = open('txt/metalinjection.txt', 'w')
     file.write(articles[0].text)
     file.close()
     

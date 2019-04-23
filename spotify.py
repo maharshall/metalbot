@@ -42,6 +42,8 @@ def add_single(token, queries):
                 track_uri = result['items'][0]['uri']
                 sp.user_playlist_add_tracks(username, singles, {track_uri})
                 print('-> added \''+result['items'][0]['name']+'\' to singles')
+        else:
+            print('-x \''+q[1]+'\' not found on spotify')
 
 def add_release(token, queries):
     sp = spotipy.Spotify(auth=token)
@@ -61,6 +63,8 @@ def add_release(token, queries):
                 track_uri = result['items'][0]['uri']
                 sp.user_playlist_add_tracks(username, releases, {track_uri})
                 print('-> added \''+result['items'][0]['name']+'\' to releases')
+        else:
+            print('-x \''+q[1]+'\' not found on spotify')
 
 def check_track_correct(artist, track, result):
     if track.lower().strip() == result['items'][0]['name'].lower().strip():

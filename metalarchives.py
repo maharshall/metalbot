@@ -7,8 +7,8 @@ import re
 import pprint
 
 def scrape_new_releases():
-    # page = requests.get('https://metalinjection.net/category/new-music', headers={'User-Agent':'Mozilla/5.0'})
-    soup = BeautifulSoup(open('metalarchives.html'), 'html.parser')
+    page = requests.get('https://metalinjection.net/category/new-music', headers={'User-Agent':'Mozilla/5.0'})
+    soup = BeautifulSoup(page.content, 'html.parser')
     songs = []
 
     now = datetime.datetime.now()
