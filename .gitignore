@@ -10,3 +10,5 @@ metalstorm.html
 metalarchives.html
 metalarchives_files/
 .gitignore
+chromedriver.exe
+geckodriver.log
