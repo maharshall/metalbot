@@ -24,7 +24,7 @@ def scrape_new_releases():
     releases = table[0].find_all("tr")
     for r in releases:
         date = r.find_all("td")[4].text
-        day = re.findall('\d+', date.split(' ')[1])[0]
+        day = re.findall(r'\d+', date.split(' ')[1])[0]
         if len(day) == 1:
             day = '0'+day
 
@@ -34,4 +34,4 @@ def scrape_new_releases():
         else:
             break
 
-        return songs
+    return songs

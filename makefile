@@ -1,12 +1,13 @@
 run:
-	python main.py
+	python -W ignore main.py
 
 clean:
-	> metalinjection.txt
-	> decibel.txt
-	> metalstorm.txt
+	> txt/mi_headlines.txt
+	> txt/mi_releases.txt
+	> txt/decibel.txt
 
 test:
-	> metalinjection.txt
-	> decibel.txt
-	python main.py
+	> txt/mi_headlines.txt
+	> txt/mi_releases.txt
+	> txt/decibel.txt
+	python -W ignore main.py

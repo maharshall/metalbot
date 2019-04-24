@@ -26,28 +26,23 @@ def get_auth_token():
 
 def add_single(token, queries):
     sp = spotipy.Spotify(auth=token)
-    tracks = sp.user_playlist_tracks(username, singles)
 
     for q in queries:
         query = q[0]+' '+q[1]
         album = sp.search(query, limit=1, type='album')
         if len(album['albums']['items']) > 0:
-            result = sp.album_tracks(album['albums']['items'][0]['id'])
+            result = sp.album_tracks(album['albums']['items'][0]['uri'])
 
             if len(result['items']) > 0:
-                for track in tracks['items']:
-                    if track['track']['name'] == result['items'][0]['name']:
-                        return None
-
-                track_uri = result['items'][0]['uri']
-                sp.user_playlist_add_tracks(username, singles, {track_uri})
-                print('-> added \''+result['items'][0]['name']+'\' to singles')
+                if track_not_in_playlist(sp, singles, result['items'][0]['id']):
+                    track_uri = result['items'][0]['uri']
+                    sp.user_playlist_add_tracks(username, singles, {track_uri})
+                    print('-> added \''+result['items'][0]['name']+'\' to singles')
         else:
             print('-x \''+q[1]+'\' not found on spotify')
 
 def add_release(token, queries):
     sp = spotipy.Spotify(auth=token)
-    tracks = sp.user_playlist_tracks(username, releases)
 
     for q in queries:
         query = q[0]+' '+q[1]
@@ -56,21 +51,16 @@ def add_release(token, queries):
             result = sp.album_tracks(album['albums']['items'][0]['uri'], 1, 1)
 
             if len(result['items']) > 0:
-                for track in tracks['items']:
-                    if track['track']['name'] == result['items'][0]['name']:
-                        return None
-
-                track_uri = result['items'][0]['uri']
-                sp.user_playlist_add_tracks(username, releases, {track_uri})
-                print('-> added \''+result['items'][0]['name']+'\' to releases')
+                if track_not_in_playlist(sp, releases, result['items'][0]['id']):
+                    track_uri = result['items'][0]['uri']
+                    sp.user_playlist_add_tracks(username, releases, {track_uri})
+                    print('-> added \''+result['items'][0]['name']+'\' to releases')
         else:
             print('-x \''+q[1]+'\' not found on spotify')
 
-def check_track_correct(artist, track, result):
-    if track.lower().strip() == result['items'][0]['name'].lower().strip():
-        if artist.lower().strip() == result['items'][0]['artists'][0]['name'].lower().strip():
-            return True
-        else:
+def track_not_in_playlist(sp, playlist_id, track_id):
+    tracks = sp.user_playlist_tracks(username, playlist_id)
+    for track in tracks['items']:
+        if track['track']['id'] == track_id:
             return False
-    else:
-        return False
+    return True

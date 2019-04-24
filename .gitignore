@@ -12,3 +12,4 @@ metalarchives_files/
 .gitignore
 chromedriver.exe
 geckodriver.log
+testing.py
