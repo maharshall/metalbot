@@ -1,41 +1,37 @@
 # Alexander Marshall
 
-import requests
-import datetime
 from bs4 import BeautifulSoup
-from selenium import webdriver
-import re
+import datetime
+import dryscrape
 import pprint
+import re
+import requests
 
-# def scrape_new_releases():
-browser = webdriver.Chrome('chromedriver.exe') 
-browser.get('https://www.metal-archives.com/release/upcoming')
-innerHTML = browser.execute_script("return document.body.innerHTML")
+def scrape_new_releases():
+    sess = dryscrape.Session()
+    sess.set_attribute('auto_load_images', False)
+    sess.visit('https://www.metal-archives.com/release/upcoming')
+    sess.wait_for(lambda: sess.at_css("tr.odd"))
+    soup = BeautifulSoup(sess.body(), 'html.parser')
+    songs = []
 
-# page = requests.get('https://www.metal-archives.com/release/upcoming', headers={'User-Agent':'Mozilla/5.0'})
-soup = BeautifulSoup(innerHTML, 'html.parser')
-songs = []
+    now = datetime.datetime.now()
+    today = str(now.day)
+    if len(today) == 1:
+        today = '0'+today
 
-pprint.pprint(soup)
-exit()
+    table = soup.find_all("tbody")
+    releases = table[0].find_all("tr")
+    for r in releases:
+        date = r.find_all("td")[4].text
+        day = re.findall('\d+', date.split(' ')[1])[0]
+        if len(day) == 1:
+            day = '0'+day
 
-now = datetime.datetime.now()
-today = str(now.day)
-if len(today) == 1:
-    today = '0'+today
+        if day == today:
+            a = r.find_all("a")
+            songs.append([a[0].text, a[1].text])
+        else:
+            break
 
-table = soup.find_all("tbody")
-releases = table[0].find_all("tr")
-for r in releases:
-    date = r.find_all("td")[4].text
-    day = re.findall('\d+', date.split(' ')[1])[0]
-    if len(day) == 1:
-        day = '0'+day
-
-    if day == today:
-        a = r.find_all("a")
-        songs.append([a[0].text, a[1].text])
-    else:
-        break
-
-    # return songs
+        return songs

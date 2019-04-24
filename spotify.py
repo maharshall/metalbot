@@ -10,8 +10,8 @@ username = 'username'
 singles = 'playlist_id'
 releases = 'playlist_id'
 client_id = 'client_id'
-client_secret='client_secret'
-redirect_uri='redirect_uri'
+client_secret = 'client_secret'
+redirect_uri = 'redirect_uri'
 
 def get_auth_token():
     scope = ('playlist-read-private playlist-read-collaborative '
