@@ -24,8 +24,9 @@ def get_auth_token():
     else:
         return None
 
-def add_single(token, queries):
+def add_tracks(token, queries, isSingle):
     sp = spotipy.Spotify(auth=token)
+    playlist_id = singles if isSingle else releases
 
     for q in queries:
         query = q[0]+' '+q[1]
@@ -34,29 +35,14 @@ def add_single(token, queries):
             result = sp.album_tracks(album['albums']['items'][0]['uri'])
 
             if len(result['items']) > 0:
-                if track_not_in_playlist(sp, singles, result['items'][0]['id']):
+                if track_not_in_playlist(sp, playlist_id, result['items'][0]['id']):
                     track_uri = result['items'][0]['uri']
-                    sp.user_playlist_add_tracks(username, singles, {track_uri})
-                    print('-> added \''+result['items'][0]['name']+'\' to singles')
-        else:
-            print('-x \''+q[1]+'\' not found on spotify')
-
-def add_release(token, queries):
-    sp = spotipy.Spotify(auth=token)
-
-    for q in queries:
-        query = q[0]+' '+q[1]
-        album = sp.search(query, limit=1, type='album')
-        if len(album['albums']['items']) > 0:
-            result = sp.album_tracks(album['albums']['items'][0]['uri'], 1, 1)
-
-            if len(result['items']) > 0:
-                if track_not_in_playlist(sp, releases, result['items'][0]['id']):
-                    track_uri = result['items'][0]['uri']
-                    sp.user_playlist_add_tracks(username, releases, {track_uri})
-                    print('-> added \''+result['items'][0]['name']+'\' to releases')
-        else:
-            print('-x \''+q[1]+'\' not found on spotify')
+                    sp.user_playlist_add_tracks(username, playlist_id, {track_uri})
+                    
+                    if isSingle:
+                        print('-> added \''+result['items'][0]['name']+'\' to singles')
+                    else:
+                        print('-> added \''+result['items'][0]['name']+'\' to releases')
 
 def track_not_in_playlist(sp, playlist_id, track_id):
     tracks = sp.user_playlist_tracks(username, playlist_id)
