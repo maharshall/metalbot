@@ -45,8 +45,11 @@ def add_tracks(token, queries, isSingle):
                         print('-> added \''+result['items'][0]['name']+'\' to releases')
 
 def track_not_in_playlist(sp, playlist_id, track_id):
-    tracks = sp.user_playlist_tracks(username, playlist_id)
-    for track in tracks['items']:
-        if track['track']['id'] == track_id:
-            return False
+    total_tracks = sp.user_playlist(username, playlist_id)['tracks']['total']
+    
+    for i in range(0, total_tracks, 100):
+        tracks = sp.user_playlist_tracks(username, playlist_id, limit=100, offset=i)
+        for track in tracks['items']:
+            if track['track']['id'] == track_id:
+                return False
     return True

@@ -13,3 +13,4 @@ metalarchives_files/
 chromedriver.exe
 geckodriver.log
 testing.py
+output.txt
