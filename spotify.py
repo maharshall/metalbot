@@ -1,5 +1,6 @@
 # Alexander Marshall
 
+import datetime
 import requests
 import random
 import spotipy
@@ -35,14 +36,17 @@ def add_tracks(token, queries, isSingle):
             result = sp.album_tracks(album['albums']['items'][0]['uri'])
 
             if len(result['items']) > 0:
-                if track_not_in_playlist(sp, playlist_id, result['items'][0]['id']):
-                    track_uri = result['items'][0]['uri']
-                    sp.user_playlist_add_tracks(username, playlist_id, {track_uri})
-                    
-                    if isSingle:
-                        print('-> added \''+result['items'][0]['name']+'\' to singles')
-                    else:
-                        print('-> added \''+result['items'][0]['name']+'\' to releases')
+                release_year = sp.album(album['albums']['items'][0]['uri'])['release_date'][:4]
+                year = str(datetime.datetime.now().year)
+                if year == release_year:
+                    if track_not_in_playlist(sp, playlist_id, result['items'][0]['id']):
+                        track_uri = result['items'][0]['uri']
+                        sp.user_playlist_add_tracks(username, playlist_id, {track_uri})
+                        
+                        if isSingle:
+                            print('-> added \''+result['items'][0]['name']+'\' to singles')
+                        else:
+                            print('-> added \''+result['items'][0]['name']+'\' to releases')
 
 def track_not_in_playlist(sp, playlist_id, track_id):
     total_tracks = sp.user_playlist(username, playlist_id)['tracks']['total']
