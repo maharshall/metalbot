@@ -3,6 +3,6 @@
 import metalinjection
 import spotify
 
-token = spotify.get_auth_token()
+token = 'redacted'
 newReleasesMI = metalinjection.scrape_releases()
 spotify.add_tracks(token, newReleasesMI, False)

@@ -7,12 +7,12 @@ import spotipy
 import spotipy.util as util
 import pprint
 
-username = 'username'
-singles = 'playlist_id'
-releases = 'playlist_id'
-client_id = 'client_id'
-client_secret = 'client_secret'
-redirect_uri = 'redirect_uri'
+username = 'maharshall'
+singles = '62KelBdHNgaItNywPZkA2R'
+releases = '0HbJfzwrNi5nDamlxKvODk'
+client_id = 'ac12f46607504b4abad996f52b661cb3'
+client_secret = '4524067f2e404b4b98300ec48700eb46'
+redirect_uri = 'http://localhost/'
 
 def get_auth_token():
     scope = ('playlist-read-private playlist-read-collaborative '
@@ -43,10 +43,10 @@ def add_tracks(token, queries, isSingle):
                         track_uri = result['items'][0]['uri']
                         sp.user_playlist_add_tracks(username, playlist_id, {track_uri})
                         
-                        if isSingle:
-                            print('-> added \''+result['items'][0]['name']+'\' to singles')
-                        else:
-                            print('-> added \''+result['items'][0]['name']+'\' to releases')
+                        #if isSingle:
+                            #print('-> added \''+result['items'][0]['name']+'\' to singles')
+                        #else:
+                            #print('-> added \''+result['items'][0]['name']+'\' to releases')
 
 def track_not_in_playlist(sp, playlist_id, track_id):
     total_tracks = sp.user_playlist(username, playlist_id)['tracks']['total']
