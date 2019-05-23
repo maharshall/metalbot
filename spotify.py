@@ -7,12 +7,12 @@ import spotipy
 import spotipy.util as util
 import pprint
 
-username = 'maharshall'
-singles = '62KelBdHNgaItNywPZkA2R'
-releases = '0HbJfzwrNi5nDamlxKvODk'
-client_id = 'ac12f46607504b4abad996f52b661cb3'
-client_secret = '4524067f2e404b4b98300ec48700eb46'
-redirect_uri = 'http://localhost/'
+username = 'redacted'
+singles = 'redacted'
+releases = 'redacted'
+client_id = 'redacted'
+client_secret = 'redacted'
+redirect_uri = 'redacted'
 
 def get_auth_token():
     scope = ('playlist-read-private playlist-read-collaborative '
