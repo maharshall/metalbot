@@ -1,18 +1,16 @@
 # Alexander Marshall
 
-from bs4 import BeautifulSoup
-import datetime
-import dryscrape
-import pprint
 import re
+import datetime
 import requests
+from bs4 import BeautifulSoup
+from selenium import webdriver
 
 def scrape_new_releases():
-    sess = dryscrape.Session()
-    sess.set_attribute('auto_load_images', False)
-    sess.visit('https://www.metal-archives.com/release/upcoming')
-    sess.wait_for(lambda: sess.at_css("tr.odd"))
-    soup = BeautifulSoup(sess.body(), 'html.parser')
+    driver = webdriver.Firefox()
+    driver.implicitly_wait(30)
+    driver.get('https://www.metal-archives.com/release/upcoming')
+    soup = BeautifulSoup(driver.page_source, 'html.parser')
     songs = []
 
     now = datetime.datetime.now()
@@ -34,4 +32,5 @@ def scrape_new_releases():
         else:
             break
 
+    driver.quit()
     return songs

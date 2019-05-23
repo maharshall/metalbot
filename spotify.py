@@ -43,10 +43,10 @@ def add_tracks(token, queries, isSingle):
                         track_uri = result['items'][0]['uri']
                         sp.user_playlist_add_tracks(username, playlist_id, {track_uri})
                         
-                        #if isSingle:
-                            #print('-> added \''+result['items'][0]['name']+'\' to singles')
-                        #else:
-                            #print('-> added \''+result['items'][0]['name']+'\' to releases')
+                        if isSingle:
+                            print('-> added \''+result['items'][0]['name']+'\' to singles')
+                        else:
+                            print('-> added \''+result['items'][0]['name']+'\' to releases')
 
 def track_not_in_playlist(sp, playlist_id, track_id):
     total_tracks = sp.user_playlist(username, playlist_id)['tracks']['total']
